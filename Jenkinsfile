@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Xenon27/xenon27-live.git'
+            }
+        }
+
+        stage('Build and Deploy with Docker Compose') {
+            steps {
+                sh 'docker-compose down'
+                sh 'docker-compose pull'
+                sh 'docker-compose up -d --build'
+            }
+        }
+    }
+}
